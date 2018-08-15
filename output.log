@@ -1,0 +1,4 @@
+init_serial:COM1
+term_init
+term_print:Hello, World!
+term_print:Welcome to the kernel.
