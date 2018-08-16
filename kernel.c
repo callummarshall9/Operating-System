@@ -7,6 +7,10 @@
 #include "vga/term.c"
 #include "multibootspec/multiboot.h"
 #include "string/utils.c"
+#include "mm/mmap.c"
+#include "mm/liballoc_hooks.c"
+#include "mm/liballoc/liballoc.h"
+#include "mm/liballoc/liballoc.c"
  
 // First, let's do some basic checks to make sure we are using our x86-elf cross-compiler correctly
 #if defined(__linux__)
@@ -17,7 +21,7 @@
  
 #define CHECK_FLAG(flags,bit)   ((flags) & (1 << (bit)))
 // This is our kernel's main function
-void kernel_main(unsigned long magic, unsigned long header)
+void kernel_main(uint32_t magic, unsigned long header)
 {
 	// We're here! Let's initiate the terminal and display a message to show we got here.
  	init_serial();//Initialise serial.
@@ -25,9 +29,15 @@ void kernel_main(unsigned long magic, unsigned long header)
 	// Display some messages
 	term_print("Hello, World!\n");
 	term_print("Welcome to the kernel.\n");
-	multiboot_info_t *mbi;
-	mbi = (multiboot_info_t *) header;
-	if (CHECK_FLAG (mbi->flags, 6))
+	if(magic != MULTIBOOT_BOOTLOADER_MAGIC) {
+		term_print("Error: not compliant bootloader for multiboot v1 specification!");
+		return;
+	}
+	verified_mboot_hdr = (multiboot_info_t *) header;
+	mboot_reserved_start = (uint32_t)header;
+	mboot_reserved_end = (uint32_t)(verified_mboot_hdr + sizeof(multiboot_info_t));
+	next_free_frame = 1;
+	/*if (CHECK_FLAG (mbi->flags, 6))
          {
            multiboot_memory_map_t *mmap;
      
@@ -51,5 +61,5 @@ void kernel_main(unsigned long magic, unsigned long header)
                      (unsigned) (mmap->len & 0xffffffff),
                      (unsigned) mmap->type);
 		}
-         }
+         }*/
 }	
