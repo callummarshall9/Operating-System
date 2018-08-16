@@ -1,4 +1,17 @@
 init_serial:COM1
 term_init
 term_print:Hello, World!
+Hello, World!
 term_print:Welcome to the kernel.
+Welcome to the kernel.
+mmap_addr = 0x9000, mmap_length = 0x90
+length: 0 
+Availiable segment found, Length 0 MB 
+ size = 0x14, base_addr = 0x000000000, length = 0x00009fc00, type = 0x1
+ size = 0x14, base_addr = 0x00009fc00, length = 0x000000400, type = 0x2
+ size = 0x14, base_addr = 0x0000f0000, length = 0x000010000, type = 0x2
+length: 1022 
+Availiable segment found, Length 1022 MB 
+ size = 0x14, base_addr = 0x000100000, length = 0x03fee0000, type = 0x1
+ size = 0x14, base_addr = 0x03ffe0000, length = 0x000020000, type = 0x2
+ size = 0x14, base_addr = 0x0fffc0000, length = 0x000040000, type = 0x2

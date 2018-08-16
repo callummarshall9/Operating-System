@@ -33,6 +33,7 @@ void term_init()
 // This function places a single character onto the screen
 void term_putc(char c)
 {
+	write_serial_char(c);
 	// Remember - we don't want to display ALL characters!
 	switch (c)
 	{

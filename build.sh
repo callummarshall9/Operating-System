@@ -17,4 +17,6 @@ i686-elf-gcc -std=gnu99 -ffreestanding -g -c kernel.c -o "$PWD/bin/kernel.o";
 sleep 1;
 echo "Building elf file";
 i686-elf-gcc -ffreestanding -nostdlib -g -T linker.ld "$PWD/bin/start.o" "$PWD/bin/kernel.o" "$PWD/bin/isr_wrapper.o" "$PWD/bin/interrupt_handler.o" -o mykernel.elf -lgcc;
-
+sleep 1;
+echo "Verifying";
+./verify.sh

@@ -30,7 +30,7 @@
 	// We can expand this later if we want a larger stack. For now, it will be perfectly adequate.
 	.align 16
 	stack_bottom:
-		.skip 8192 // Reserve a 8192-byte (8K) stack
+		.skip 4096 // Reserve a 4096-byte (4K) stack
 	stack_top:
  
 // This section contains our actual assembly code to be run when our kernel loads
@@ -44,6 +44,8 @@
  
 		// Now we have a C-worthy (haha!) environment ready to run the rest of our kernel.
 		// At this point, we can call our main C function.
+		pushl   %ebx
+		pushl   %eax
 		call kernel_main
  
 		// If, by some mysterious circumstances, the kernel's C code ever returns, all we want to do is to hang the CPU
